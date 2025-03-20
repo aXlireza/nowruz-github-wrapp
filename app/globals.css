@@ -1,0 +1,430 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Fira Code";
+  src: url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 240 10% 3.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 240 10% 3.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 10% 3.9%;
+  --primary: 142.1 76.2% 36.3%;
+  --primary-foreground: 355.7 100% 97.3%;
+  --secondary: 240 4.8% 95.9%;
+  --secondary-foreground: 240 5.9% 10%;
+  --muted: 240 4.8% 95.9%;
+  --muted-foreground: 240 3.8% 46.1%;
+  --accent: 240 4.8% 95.9%;
+  --accent-foreground: 240 5.9% 10%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 240 5.9% 90%;
+  --input: 240 5.9% 90%;
+  --ring: 142.1 76.2% 36.3%;
+  --radius: 0.75rem;
+}
+
+.dark {
+  --background: 20 14.3% 4.1%;
+  --foreground: 0 0% 95%;
+  --card: 24 9.8% 10%;
+  --card-foreground: 0 0% 95%;
+  --popover: 0 0% 9%;
+  --popover-foreground: 0 0% 95%;
+  --primary: 142.1 70.6% 45.3%;
+  --primary-foreground: 144.9 80.4% 10%;
+  --secondary: 240 3.7% 15.9%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 0 0% 15%;
+  --muted-foreground: 240 5% 64.9%;
+  --accent: 12 6.5% 15.1%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 85.7% 97.3%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --ring: 142.4 71.8% 29.2%;
+}
+
+body {
+  @apply bg-background text-foreground;
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+/* Code-style elements */
+.code-block {
+  font-family: "Fira Code", monospace;
+  @apply bg-black text-white rounded-lg p-4 leading-relaxed;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow-x: auto;
+}
+
+.code-line {
+  @apply flex;
+}
+
+.code-line-number {
+  @apply text-gray-500 mr-4 select-none;
+}
+
+.keyword {
+  @apply text-[#569CD6];
+}
+
+.string {
+  @apply text-[#CE9178];
+}
+
+.comment {
+  @apply text-[#608B4E];
+}
+
+.function {
+  @apply text-[#DCDCAA];
+}
+
+.type {
+  @apply text-[#4EC9B0];
+}
+
+/* Shamsi pattern background - subtle */
+.shamsi-pattern {
+  background-color: #131313;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2339D353' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Story progress bar */
+.story-progress {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 0 2px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.story-progress-inner {
+  height: 100%;
+  background: var(--primary);
+  border-radius: 3px;
+  transition: width 0.1s linear;
+}
+
+/* Badge styles */
+.badge-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
+
+.badge-inner {
+  position: absolute;
+  inset: 10px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.badge-border {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  padding: 5px;
+  background: conic-gradient(from 0deg, #39d353, #26a641, #006d32, #0e4429, #39d353);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 5px), #fff 0);
+  mask: radial-gradient(farthest-side, transparent calc(100% - 5px), #fff 0);
+}
+
+/* GitHub-style glow effects */
+.glow-effect {
+  position: relative;
+  z-index: 1;
+}
+
+.glow-effect::after {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  right: -15px;
+  bottom: -15px;
+  background: var(--primary);
+  filter: blur(20px);
+  opacity: 0.15;
+  z-index: -1;
+  border-radius: var(--radius);
+}
+
+/* Terminal-like cards */
+.terminal-card {
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.terminal-header {
+  background: #161b22;
+  padding: 8px 16px;
+  border-bottom: 1px solid #30363d;
+  display: flex;
+  align-items: center;
+}
+
+.terminal-circle {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.terminal-circle.red {
+  background: #e34c26;
+}
+
+.terminal-circle.yellow {
+  background: #dbab09;
+}
+
+.terminal-circle.green {
+  background: #39d353;
+}
+
+.terminal-body {
+  padding: 16px;
+}
+
+/* Typing indicator */
+.typing-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background: var(--primary);
+  animation: blink 1s step-end infinite;
+}
+
+/* Enhanced typing indicator with cursor animation */
+.typing-indicator {
+  position: relative;
+  display: inline-block;
+  width: 3px;
+  height: 16px;
+  background-color: var(--primary);
+  margin-right: 4px;
+  animation: typing-blink 1s step-end infinite;
+}
+
+@keyframes typing-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Loading progress animation */
+@keyframes progress-loading {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.progress-loading {
+  animation: progress-loading 3s ease-in-out;
+}
+
+/* Slide-in animation for story elements */
+@keyframes slide-in-right {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.slide-in-right {
+  animation: slide-in-right 0.5s ease-out forwards;
+}
+
+@keyframes slide-in-left {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.slide-in-left {
+  animation: slide-in-left 0.5s ease-out forwards;
+}
+
+@keyframes fade-in-up {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.fade-in-up {
+  animation: fade-in-up 0.5s ease-out forwards;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.container-fluid {
+  width: 100%;
+  max-width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 1024px) {
+  .container-fluid {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Improve animation performance */
+.terminal-card,
+.story-view {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  transition: all 0.3s ease-out;
+}
+
+/* Smooth transitions */
+.smooth-transition {
+  transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Enhanced gradient for area charts - more subtle */
+.recharts-area {
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+  transition: all 0.3s ease;
+}
+
+/* Reduce blinking effects */
+@keyframes typing-blink {
+  0%,
+  100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* Smoother loading progress animation */
+@keyframes progress-loading {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.progress-loading {
+  animation: progress-loading 3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Smoother slide-in animations */
+@keyframes slide-in-right {
+  0% {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.slide-in-right {
+  animation: slide-in-right 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes slide-in-left {
+  0% {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.slide-in-left {
+  animation: slide-in-left 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes fade-in-up {
+  0% {
+    transform: translateY(15px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.fade-in-up {
+  animation: fade-in-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* More subtle blinking animation */
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* Fix for profile names in story titles */
+.story-title {
+  position: relative;
+  z-index: 10;
+}
+
