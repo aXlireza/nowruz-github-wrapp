@@ -367,12 +367,6 @@ export function StoryView({ userData, onComplete }: StoryViewProps) {
                   exit="exit"
                   className="h-full w-full absolute inset-0"
                 >
-                  <Image
-                    alt="img"
-                    src={"/icons/Frame 38302.png"}
-                    width={10}
-                    height={10}
-                  />
                   <CurrentStoryComponent userData={userData} />
                 </motion.div>
               </AnimatePresence>

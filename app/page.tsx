@@ -2,19 +2,29 @@ import { Suspense } from "react"
 import { GitHubStories } from "@/components/github-stories"
 import { SearchForm } from "@/components/search-form"
 import { UserInfoCard } from "@/components/user-info-card"
-import { Github, Terminal } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
+import { Github, SquareArrowOutUpRight, Terminal } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-background shamsi-pattern">
       <div className="container-fluid mx-auto px-4 py-8">
-        <header className="mb-8 text-center">
-          <Badge className="bg-transparent border-primary text-primary">Nowruz Github Wrapp</Badge>
-          <h1 className="text-5xl font-bold mb-2 flex flex-row gap-3 justify-center bg-gradient-to-r from-green-400 to-green-600 text-transparent bg-clip-text">
+        <header className="mb-8 text-center flex flex-col gap-1">
+          <Link href={"https://github.com/aXlireza/nowruz-github-wrapp"} target="_blank" className="bg-transparent border-primary text-primary flex flex-row justify-center gap-1 items-center text-xs mx-auto w-fit p-1 rounded-full hover:bg-primary hover:text-black group">
+            <Github className="size-4 p-0 stroke-primary group-hover:stroke-black" />
             <span>GitHub Stories</span>
-            <Link href={"https://github.com/axlireza"} target="_blank" className="size-7"><Badge className="p-2"><Github className="size-7 p-0" /></Badge></Link>
+            <SquareArrowOutUpRight className="size-3 p-0 stroke-primary group-hover:stroke-black" />
+          </Link>
+          <h1 className="text-5xl font-bold mb-2 flex flex-row gap-3 justify-center bg-gradient-to-r from-green-400 to-green-600 text-transparent bg-clip-text">
+            <Image
+              alt="img"
+              src={"/icons/Frame 38306.png"}
+              width={10}
+              height={10}
+              className="size-10"
+            />
+            <span>Nowruz Github Wrapp</span>
           </h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             View GitHub activity in an engaging story format with{" "}
