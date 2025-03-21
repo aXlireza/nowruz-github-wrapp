@@ -16,7 +16,7 @@ export default function Home() {
             <span>GitHub Stories</span>
             <SquareArrowOutUpRight className="size-3 p-0 stroke-primary group-hover:stroke-black" />
           </Link>
-          <h1 className="text-5xl font-bold mb-2 flex flex-row gap-3 justify-center bg-gradient-to-r from-green-400 to-green-600 text-transparent bg-clip-text">
+          <h1 className="text-5xl font-bold mb-2 flex flex-col-reverse sm:flex-row gap-3 justify-center w-fit mx-auto text-center items-center">
             <Image
               alt="img"
               src={"/icons/Frame 38306.png"}
@@ -24,11 +24,11 @@ export default function Home() {
               height={10}
               className="size-10"
             />
-            <span>Nowruz Github Wrapp</span>
+            <span className="bg-gradient-to-r from-green-400 to-green-600 text-transparent bg-clip-text">Nowruz Github Wrapp</span>
           </h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             View GitHub activity in an engaging story format with{" "}
-            <span className="text-green-500">Shamsi New Year</span> celebration vibes.
+            <span className="text-green-500">نوروز</span> celebration vibes.
           </p>
         </header>
 
