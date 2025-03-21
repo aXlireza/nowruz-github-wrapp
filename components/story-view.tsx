@@ -367,6 +367,12 @@ export function StoryView({ userData, onComplete }: StoryViewProps) {
                   exit="exit"
                   className="h-full w-full absolute inset-0"
                 >
+                  <Image
+                    alt="img"
+                    src={"/icons/Frame 38302.png"}
+                    width={10}
+                    height={10}
+                  />
                   <CurrentStoryComponent userData={userData} />
                 </motion.div>
               </AnimatePresence>
@@ -408,7 +414,7 @@ export function StoryView({ userData, onComplete }: StoryViewProps) {
                       }
                       onComplete()
                     }}
-                    className="absolute top-6 right-4 z-30 w-8 h-8 rounded-full bg-black/40 flex items-center justify-center hover:bg-black/60 transition-colors"
+                    className="absolute top-1 right-4 z-30 w-8 h-8 rounded-full bg-black/40 flex items-center justify-center hover:bg-black/60 transition-colors"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     initial={{ opacity: 0, rotate: -90 }}
