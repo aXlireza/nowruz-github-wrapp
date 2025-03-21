@@ -233,7 +233,6 @@ export function StoryView({ userData, onComplete }: StoryViewProps) {
   }
 
   const CurrentStoryComponent = stories[currentStory].component
-debugger
   return (
     <motion.div
       className="w-full h-full relative overflow-hidden rounded-xl shadow-lg bg-gradient-to-br from-gray-900 to-black text-white border border-gray-800"
