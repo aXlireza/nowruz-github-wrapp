@@ -66,10 +66,9 @@ export function StoryView({ userData, onComplete }: StoryViewProps) {
 
   // Define goToNextStory first, using a ref to break circular dependency
   const goToNextStory = useCallback(() => {
-    debugger
     if (currentStory < stories.length - 1) {
       setDirection(1)
-      setCurrentStory((prev) => prev + 1)
+      setCurrentStory(() => currentStory + 1)
     } else {
       // Complete the stories - use ref to prevent multiple calls
       if (!completeTriggeredRef.current) {
