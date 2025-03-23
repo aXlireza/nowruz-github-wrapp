@@ -264,7 +264,7 @@ export function StoryView({ userData, onComplete }: StoryViewProps) {
             <AnimatePresence>
               {progressBarsVisible && (
                 <motion.div
-                  className="absolute top-0 left-0 right-0 z-20 flex p-2 gap-1"
+                  className="absolute bg-black/80 top-0 left-0 right-0 z-20 flex p-2 gap-1"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
@@ -284,7 +284,7 @@ export function StoryView({ userData, onComplete }: StoryViewProps) {
                       }}
                     >
                       <motion.div
-                        className="story-progress-inner"
+                        className="story-progress-inner bg-slate-200 h-full rounded-[3px]"
                         initial={{ width: "0%" }}
                         animate={{
                           width:
@@ -311,7 +311,7 @@ export function StoryView({ userData, onComplete }: StoryViewProps) {
             <AnimatePresence>
               {headerVisible && (
                 <motion.div
-                  className="absolute top-0 left-0 right-0 z-20 flex justify-between items-center p-4 pt-6 bg-gradient-to-b from-black/80 via-black/50 to-transparent"
+                  className="absolute top-3 left-0 right-0 z-20 flex justify-between items-center p-4 pt-6 bg-gradient-to-b from-black/80 via-black/50 to-transparent"
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
