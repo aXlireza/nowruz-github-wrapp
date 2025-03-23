@@ -11,7 +11,6 @@ import { ContributionsStory } from "@/components/stories/contributions-story"
 import { LanguagesStory } from "@/components/stories/languages-story"
 import { SeasonalContributionsStory } from "@/components/stories/seasonal-contributions-story"
 import { X, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react"
-import { useNowruzCharacter } from "@/contexts/nowruz-character-context"
 
 interface StoryViewProps {
   userData: UserData
@@ -31,7 +30,6 @@ export function StoryView({ userData, onComplete }: StoryViewProps) {
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
   const completeTriggeredRef = useRef(false)
   const goToNextStoryRef = useRef<() => void>(() => {})
-  const { showCharacter } = useNowruzCharacter()
 
   const stories = useRef([
     { component: ProfileStory, duration: 5000 },
@@ -70,73 +68,16 @@ export function StoryView({ userData, onComplete }: StoryViewProps) {
   const goToNextStory = useCallback(() => {
     if (currentStory < stories.length - 1) {
       setDirection(1)
-      // Show a character when changing stories - with more subtle timing
-      if (currentStory === 1) {
-        setTimeout(() => {
-          showCharacter({
-            type: "goldfish",
-            mood: "excited",
-            message: "Check out these awesome repositories!",
-            position: "bottomRight",
-            autoHide: true,
-            hideAfter: 4000,
-          })
-        }, 500)
-      } else if (currentStory === 2) {
-        setTimeout(() => {
-          showCharacter({
-            type: "sabzeh",
-            mood: "happy",
-            message: "Look at all your activity this year!",
-            position: "bottomLeft",
-            autoHide: true,
-            hideAfter: 4000,
-          })
-        }, 500)
-      } else if (currentStory === 3) {
-        setTimeout(() => {
-          showCharacter({
-            type: "fire",
-            mood: "celebrate",
-            message: "Your contributions are growing!",
-            position: "topRight",
-            autoHide: true,
-            hideAfter: 4000,
-          })
-        }, 500)
-      } else if (currentStory === 4) {
-        setTimeout(() => {
-          showCharacter({
-            type: "hajiFiruz",
-            mood: "dance",
-            message: "Let's see your seasonal contributions!",
-            position: "bottomRight",
-            autoHide: true,
-            hideAfter: 4000,
-          })
-        }, 500)
-      }
       setCurrentStory((prev) => prev + 1)
     } else {
       // Complete the stories - use ref to prevent multiple calls
       if (!completeTriggeredRef.current) {
         completeTriggeredRef.current = true
-        if (intervalRef.current) {
-          clearInterval(intervalRef.current)
-        }
-        // Show a character when completing all stories
-        showCharacter({
-          type: "hajiFiruz",
-          mood: "celebrate",
-          message: "You've completed all stories! Let's see your performance badge!",
-          position: "bottomRight",
-          autoHide: true,
-          hideAfter: 5000,
-        })
+        if (intervalRef.current) clearInterval(intervalRef.current)
         onComplete()
       }
     }
-  }, [currentStory, stories.length, onComplete, showCharacter])
+  }, [currentStory, stories.length, onComplete])
 
   // Update the ref whenever goToNextStory changes
   useEffect(() => {
