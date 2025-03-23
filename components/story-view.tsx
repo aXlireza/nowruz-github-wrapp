@@ -87,7 +87,7 @@ export function StoryView({ userData, onComplete }: StoryViewProps) {
   const goToPreviousStory = useCallback(() => {
     if (currentStory > 0) {
       setDirection(-1)
-      setCurrentStory((prev) => prev - 1)
+      setCurrentStory(() => currentStory - 1)
     }
   }, [currentStory])
 
