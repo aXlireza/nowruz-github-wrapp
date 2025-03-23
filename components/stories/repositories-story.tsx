@@ -52,7 +52,7 @@ export function RepositoriesStory({ userData }: RepositoriesStoryProps) {
 
   return (
     <motion.div
-      className="h-full w-full flex flex-col p-6 bg-gradient-to-br from-blue-900 to-gray-900 shamsi-pattern relative overflow-hidden"
+      className="h-full w-full flex flex-col bg-gradient-to-br from-blue-900 to-gray-900 shamsi-pattern relative overflow-hidden"
       variants={containerVariants}
       initial="hidden"
       animate="show"

@@ -197,7 +197,7 @@ export function StoryView({ userData, onComplete }: StoryViewProps) {
       <AnimatePresence>
         {isContentReady && (
           <motion.div
-            className="absolute inset-0 z-10"
+            className="relative inset-0 z-10"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
@@ -253,7 +253,7 @@ export function StoryView({ userData, onComplete }: StoryViewProps) {
             <AnimatePresence>
               {headerVisible && (
                 <motion.div
-                  className="absolute top-3 left-0 right-0 z-20 flex justify-between items-center p-4 pt-6 bg-gradient-to-b from-black/80 via-black/50 to-transparent"
+                  className="relative top-3 left-0 right-0 z-20 flex justify-between items-center p-4 pt-6 bg-gradient-to-b from-black/80 via-black/50 to-transparent"
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
@@ -298,7 +298,7 @@ export function StoryView({ userData, onComplete }: StoryViewProps) {
             </AnimatePresence>
 
             {/* Story content with AnimatePresence for smooth transitions */}
-            <div className="h-full w-full">
+            <div className="relative h-full w-full">
               <AnimatePresence initial={false} custom={direction} mode="wait">
                 <motion.div
                   key={currentStory}
@@ -307,7 +307,7 @@ export function StoryView({ userData, onComplete }: StoryViewProps) {
                   initial="enter"
                   animate="center"
                   exit="exit"
-                  className="h-full w-full absolute inset-0"
+                  className="h-full w-full"
                 >
                   <CurrentStoryComponent userData={userData} />
                 </motion.div>

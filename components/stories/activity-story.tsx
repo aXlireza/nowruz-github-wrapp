@@ -99,7 +99,7 @@ export function ActivityStory({ userData }: ActivityStoryProps) {
 
   return (
     <motion.div
-      className="h-full w-full flex flex-col p-6 bg-gradient-to-br from-purple-900 to-gray-900 shamsi-pattern relative overflow-hidden"
+      className="h-full w-full flex flex-col bg-gradient-to-br from-purple-900 to-gray-900 shamsi-pattern relative overflow-hidden"
       variants={containerVariants}
       initial="hidden"
       animate="show"

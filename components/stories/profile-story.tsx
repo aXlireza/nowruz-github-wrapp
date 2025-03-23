@@ -77,7 +77,7 @@ export function ProfileStory({ userData }: ProfileStoryProps) {
 
   return (
     <motion.div
-      className="h-full w-full flex flex-col items-center justify-center p-6 bg-gradient-to-br from-gray-900 to-black shamsi-pattern"
+      className="h-full w-full flex flex-col items-center justify-center bg-gradient-to-br from-gray-900 to-black shamsi-pattern"
       variants={containerVariants}
       initial="hidden"
       animate="show"

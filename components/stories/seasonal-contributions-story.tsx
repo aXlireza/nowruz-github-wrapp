@@ -236,7 +236,7 @@ export function SeasonalContributionsStory({ userData }: SeasonalContributionsSt
 
   return (
     <motion.div
-      className="h-full w-full flex flex-col p-6 bg-gradient-to-br from-gray-900 to-black shamsi-pattern relative overflow-hidden"
+      className="h-full w-full flex flex-col bg-gradient-to-br from-gray-900 to-black shamsi-pattern relative overflow-hidden"
       variants={containerVariants}
       initial="hidden"
       animate="show"
