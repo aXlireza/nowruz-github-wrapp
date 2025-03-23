@@ -32,12 +32,12 @@ export function StoryView({ userData, onComplete }: StoryViewProps) {
   const goToNextStoryRef = useRef<() => void>(() => {})
 
   const stories = useRef([
-    { component: ProfileStory, duration: 5000 },
-    { component: RepositoriesStory, duration: 7000 },
-    { component: ActivityStory, duration: 6000 },
-    { component: ContributionsStory, duration: 5000 },
-    { component: LanguagesStory, duration: 5000 },
-    { component: SeasonalContributionsStory, duration: 6000 },
+    { component: ProfileStory, duration: 7000 },
+    { component: RepositoriesStory, duration: 5000 },
+    { component: ActivityStory, duration: 5000 },
+    { component: ContributionsStory, duration: 6000 },
+    { component: LanguagesStory, duration: 15000 },
+    { component: SeasonalContributionsStory, duration: 20000 },
   ]).current
 
   const resetInterval = useCallback(() => {
@@ -66,6 +66,7 @@ export function StoryView({ userData, onComplete }: StoryViewProps) {
 
   // Define goToNextStory first, using a ref to break circular dependency
   const goToNextStory = useCallback(() => {
+    debugger
     if (currentStory < stories.length - 1) {
       setDirection(1)
       setCurrentStory((prev) => prev + 1)
@@ -174,6 +175,7 @@ export function StoryView({ userData, onComplete }: StoryViewProps) {
   }
 
   const CurrentStoryComponent = stories[currentStory].component
+
   return (
     <motion.div
       className="w-full h-full relative overflow-hidden rounded-xl shadow-lg bg-gradient-to-br from-gray-900 to-black text-white border border-gray-800"

@@ -2,7 +2,6 @@
 
 import type React from "react"
 import { createContext, useContext, useEffect, useState } from "react"
-import { NowruzCharacterProvider } from "@/contexts/nowruz-character-context"
 
 interface AuthContextType {
   isAuthenticated: boolean
@@ -100,7 +99,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, token, login, logout, error }}>
-      <NowruzCharacterProvider>{children}</NowruzCharacterProvider>
+      {children}
     </AuthContext.Provider>
   )
 }

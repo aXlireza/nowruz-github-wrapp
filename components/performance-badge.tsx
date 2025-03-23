@@ -5,7 +5,6 @@ import { useState, useEffect } from "react"
 import { Award, Download, Sparkles, Star } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { confetti } from "@/lib/confetti"
-import { useNowruzCharacter } from "@/contexts/nowruz-character-context"
 
 interface PerformanceBadgeProps {
   score: number
@@ -14,7 +13,6 @@ interface PerformanceBadgeProps {
 
 export function PerformanceBadge({ score, username }: PerformanceBadgeProps) {
   const [isAnimating, setIsAnimating] = useState(true)
-  const { showCharacter } = useNowruzCharacter()
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -26,20 +24,10 @@ export function PerformanceBadge({ score, username }: PerformanceBadgeProps) {
         spread: 70,
         origin: { y: 0.3 },
       })
-
-      // Show a celebrating character
-      showCharacter({
-        type: score >= 75 ? "hajiFiruz" : "goldfish",
-        mood: "celebrate",
-        message: `Congratulations ${username}! Your GitHub performance score is ${score}!`,
-        position: "bottomRight",
-        autoHide: true,
-        hideAfter: 10000,
-      })
     }, 2000)
 
     return () => clearTimeout(timer)
-  }, [score, username, showCharacter])
+  }, [score, username])
 
   const getScoreCategory = () => {
     if (score >= 90) return "Exceptional"
@@ -66,16 +54,6 @@ export function PerformanceBadge({ score, username }: PerformanceBadgeProps) {
       particleCount: 100,
       spread: 120,
       origin: { y: 0.6 },
-    })
-
-    // Show a different character
-    showCharacter({
-      type: "fire",
-      mood: "excited",
-      message: "Your badge is ready! Share it with your friends!",
-      position: "bottomLeft",
-      autoHide: true,
-      hideAfter: 6000,
     })
   }
 
