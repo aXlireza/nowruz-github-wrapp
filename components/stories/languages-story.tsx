@@ -14,9 +14,9 @@ export function LanguagesStory({ userData }: LanguagesStoryProps) {
 
   // Enhanced vibrant color palette
   const COLORS = [
-    "#FF6AD5", // Pink
-    "#C774E8", // Purple
-    "#AD8CFF", // Lavender
+    "#22c55e", // Pink
+    "#901717", // Purple
+    "#4fc3f7", // Lavender
     "#8795E8", // Periwinkle
     "#94D0FF", // Light Blue
     "#4CB8FF", // Blue

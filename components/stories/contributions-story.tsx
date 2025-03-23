@@ -263,9 +263,9 @@ export function ContributionsStory({ userData }: ContributionsStoryProps) {
             <defs>
               {/* Gradient that starts from the line and fades to transparent */}
               <linearGradient id="colorCount" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#666666" stopOpacity={0.7} />
-                <stop offset="75%" stopColor="#666666" stopOpacity={0.05} />
-                <stop offset="100%" stopColor="#666666" stopOpacity={0} />
+                <stop offset="0%" stopColor="#22c55e" stopOpacity={0.7} />
+                <stop offset="40%" stopColor="#22c55e" stopOpacity={0.1} />
+                <stop offset="100%" stopColor="#22c55e" stopOpacity={0} />
               </linearGradient>
             </defs>
             <XAxis dataKey="month" stroke="#ffffff" tick={{ fill: "#ffffff" }} tickLine={false} axisLine={false} />
@@ -290,7 +290,7 @@ export function ContributionsStory({ userData }: ContributionsStoryProps) {
             <Area
               type="monotone"
               dataKey="count"
-              stroke="#888888"
+              stroke="#22c55e"
               strokeWidth={2}
               fillOpacity={1}
               fill="url(#colorCount)"
