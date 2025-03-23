@@ -3,7 +3,6 @@
 import { motion, AnimatePresence } from "framer-motion"
 import type { UserData } from "@/lib/github-service"
 import { Sun, Cloud, Leaf, Snowflake } from "lucide-react"
-import { NowruzCharacter } from "@/components/nowruz-character"
 import { useState } from "react"
 
 interface SeasonalContributionsStoryProps {
@@ -444,17 +443,6 @@ export function SeasonalContributionsStory({ userData }: SeasonalContributionsSt
                   </div>
                 )
               })}
-            </div>
-
-            {/* Character in corner - with subtle animation */}
-            <div className="absolute bottom-2 right-2">
-              <NowruzCharacter
-                type={season.character}
-                mood={season.mood}
-                size="sm"
-                position="center"
-                interactive={false}
-              />
             </div>
           </motion.div>
         ))}
