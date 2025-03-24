@@ -197,7 +197,7 @@ export function StoryView({ userData, onComplete }: StoryViewProps) {
       <AnimatePresence>
         {isContentReady && (
           <motion.div
-            className="relative inset-0 z-10"
+            className="relative h-full inset-0 z-10"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
