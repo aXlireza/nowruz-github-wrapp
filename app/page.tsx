@@ -5,6 +5,7 @@ import { UserInfoCard } from "@/components/user-info-card"
 import { Github, SquareArrowOutUpRight, Terminal } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { ShamsiCalendar } from "@/components/calendar/shamsi-calendar"
 
 export default function Home() {
   return (
@@ -38,6 +39,7 @@ export default function Home() {
           <UserInfoCard />
 
           <Suspense fallback={<StoriesSkeleton />}>
+            <ShamsiCalendar />
             <GitHubStories />
           </Suspense>
         </div>
