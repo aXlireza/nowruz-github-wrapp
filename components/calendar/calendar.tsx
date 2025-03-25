@@ -3,7 +3,7 @@
 import { useRef } from "react"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
-import { getDaysInMonth, getFirstDayOfMonth } from "@/lib/shamsi-utils"
+import { generateSampleDataWithMetrics, getDaysInMonth, getFirstDayOfMonth } from "@/lib/shamsi-utils"
 
 interface HorizontalYearCalendarProps {
   year: number
@@ -83,20 +83,9 @@ export function HorizontalYearCalendar({
 
   // Get color for streak category
   const getStreakColor = (category: string) => {
-    switch (category) {
-      case "Learning":
-        return "bg-green-500/20 border-green-500/70 dark:bg-green-600/20 dark:border-green-600/70"
-      case "Exercise":
-        return "bg-blue-500/20 border-blue-500/70 dark:bg-blue-600/20 dark:border-blue-600/70"
-      case "Meditation":
-        return "bg-purple-500/20 border-purple-500/70 dark:bg-purple-600/20 dark:border-purple-600/70"
-      case "Reading":
-        return "bg-amber-500/20 border-amber-500/70 dark:bg-amber-600/20 dark:border-amber-600/70"
-      case "Coding":
-        return "bg-rose-500/20 border-rose-500/70 dark:bg-rose-600/20 dark:border-rose-600/70"
-      default:
-        return "bg-slate-500/20 border-slate-500/70 dark:bg-slate-600/20 dark:border-slate-600/70"
-    }
+    // const catIntel = categories.find(cat => cat.name === category)
+    // if (catIntel) return `bg-${catIntel.color}-500/20 border-${catIntel.color}-500/70 dark:bg-${catIntel.color}-600/20 dark:border-${catIntel.color}-600/70`
+    return "bg-slate-500/20 border-slate-500/70 dark:bg-slate-600/20 dark:border-slate-600/70"
   }
 
   // Get border radius for streak segments

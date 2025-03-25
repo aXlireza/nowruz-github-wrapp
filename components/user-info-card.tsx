@@ -7,6 +7,7 @@ import { useAuth } from "@/contexts/auth-context"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Eye, Github, AlertCircle } from "lucide-react"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import ShamsiCalendar from "./calendar/shamsi-calendar"
 
 interface UserInfo {
   login: string
@@ -100,6 +101,7 @@ export function UserInfoCard() {
 
   return (
     <div className="w-full max-w-md terminal-card">
+      <ShamsiCalendar username={user.login} isAuthenticated={isAuthenticated} />
       <div className="terminal-header">
         <div className="terminal-circle red"></div>
         <div className="terminal-circle yellow"></div>

@@ -1,15 +1,10 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { ChevronLeft, ChevronRight, CalendarIcon } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { generateSampleData } from "@/lib/shamsi-utils"
+import { useState, useEffect, useRef } from "react"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { HorizontalYearCalendar } from "./calendar"
 import { CategoryFilter } from "./category-filter"
-// import { CategoryFilter } from "./category-filter"
-// import { HorizontalYearCalendar } from "./horizontal-year-calendar"
-// import { generateSampleData } from "@/lib/sample-data"
+import { fetchUserActivities, UserActivity } from "@/lib/github-service"
 
 // Persian month names in English characters
 const persianMonths = [
@@ -49,64 +44,42 @@ const persianWeekdays = ["Sh", "Ye", "Do", "Se", "Ch", "Pa", "Jo"]
 // Persian weekday names in Persian (abbreviated)
 const persianWeekdaysPersian = ["ش", "ی", "د", "س", "چ", "پ", "ج"]
 
-export function ShamsiCalendar() {
-  const [currentYear, setCurrentYear] = useState(1402) // Persian year
-  const [data, setData] = useState<any>(null)
+export default function ShamsiCalendar(props: {
+  username: string,
+  isAuthenticated: boolean
+}) {
+  const [data, setData] = useState<UserActivity[]>([])
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
-
+  const loaded = useRef(false)
   useEffect(() => {
     // Generate sample data when component mounts
-    const sampleData = generateSampleData()
-    setData(sampleData)
-
-    // Initialize with all categories selected
-    const allCategories = [
-      ...new Set([
-        ...sampleData.heatmapData.map((item: any) => item.category),
-        ...sampleData.streakData.map((item: any) => item.category),
-      ]),
-    ]
-    setSelectedCategories(allCategories as string[])
+    if (loaded.current) return;
+    loaded.current = true
+    fetchUserActivities(props.username, props.isAuthenticated)
+    .then(setData)
+    .catch((err) => console.error("Error generating sample data:", err))
   }, [])
 
-  const handlePrevYear = () => {
-    setCurrentYear(currentYear - 1)
-  }
-
-  const handleNextYear = () => {
-    setCurrentYear(currentYear + 1)
-  }
 
   const handleCategoryToggle = (category: string) => {
-    if (selectedCategories.includes(category)) {
+    if (selectedCategories.includes(category))
       setSelectedCategories(selectedCategories.filter((c) => c !== category))
-    } else {
-      setSelectedCategories([...selectedCategories, category])
-    }
+    else setSelectedCategories([...selectedCategories, category])
   }
 
   if (!data) return <div className="flex justify-center p-8">Loading calendar data...</div>
 
-  const filteredHeatmapData = data.heatmapData.filter((item: any) => selectedCategories.includes(item.category))
-
-  const filteredStreakData = data.streakData.filter((item: any) => selectedCategories.includes(item.category))
+  // const filteredHeatmapData = data.heatmapData.filter((item: any) =>
+  //   selectedCategories.includes(item.category)
+  // )
+  // const filteredStreakData = data.streakData.filter((item: any) =>
+  //   selectedCategories.includes(item.category)
+  // )
 
   return (
     <Card className="shadow-lg border-stone-700">
-      <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
-          <div className="flex gap-1">
-            <Button variant="outline" size="icon" onClick={handlePrevYear}>
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-            <Button variant="outline" size="icon" onClick={handleNextYear}>
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-      </CardHeader>
       <CardContent>
-        <HorizontalYearCalendar
+        {/* <HorizontalYearCalendar
           year={currentYear}
           heatmapData={filteredHeatmapData}
           streakData={filteredStreakData}
@@ -123,7 +96,7 @@ export function ShamsiCalendar() {
             selectedCategories={selectedCategories}
             onToggle={handleCategoryToggle}
           />
-        </div>
+        </div> */}
 
         {/* Legend */}
         <div className="mt-4 flex flex-wrap items-center gap-4 text-sm border-t pt-4">
@@ -153,4 +126,3 @@ export function ShamsiCalendar() {
     </Card>
   )
 }
-

@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react"
 import { useSearchParams } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { type UserData, fetchGitHubUserData, updateOctokit } from "@/lib/github-service"
+import { updateOctokit } from "@/lib/github-service"
 import { StoryView } from "@/components/story-view"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle, Github, Code, Terminal } from "lucide-react"

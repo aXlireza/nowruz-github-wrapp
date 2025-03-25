@@ -1,173 +1,94 @@
 import { Octokit } from "@octokit/rest"
 
-// Initialize Octokit - will be updated with token when available
-let octokit = new Octokit({
-  // auth: process.env.GITHUB_TOKEN,
-})
+let octokit = new Octokit({})
 
-// Function to update Octokit with a user token
 export function updateOctokit(token: string) {
+  debugger
   octokit = new Octokit({
     auth: token,
   })
 }
 
-export interface UserProfile {
-  login: string
-  name: string | null
-  avatarUrl: string
-  bio: string | null
-  followers: number
-  following: number
-  publicRepos: number
-  createdAt: string
-}
-
-export interface Repository {
-  id: number
-  name: string
-  description: string | null
-  language: string | null
-  stargazersCount: number
-  forksCount: number
-  updatedAt: string
-  url: string
-}
-
-export interface Contribution {
-  date: string
-  count: number
-}
-
 export interface UserActivity {
+  date: string
   type: string
-  repo: {
-    name: string
-    url: string
-  }
-  createdAt: string
-  payload?: any
+  repo: string
 }
 
-export interface UserData {
-  profile: UserProfile
-  topRepositories: Repository[]
-  recentActivity: UserActivity[]
-  contributionsLastYear: Contribution[]
-  languages: { [key: string]: number }
-  performanceScore: number
-}
+const SHAMSI_YEAR_1403_FROM = "2024-03-21T00:00:00Z"
+const SHAMSI_YEAR_1403_TO = "2025-03-20T23:59:59Z"
 
-export async function fetchGitHubUserData(username: string): Promise<UserData> {
+// Activity Extractor
+export async function fetchUserActivities(username: string, isAuthenticated: boolean): Promise<UserActivity[]> {
   try {
-    // Fetch user profile
-    const { data: user } = await octokit.users.getByUsername({
-      username,
-    })
+    const per_page = 100 // Fetch more to cover the full date range
+    const allEvents: any[] = []
+    let page = 1
+    let fetchMore = true
 
-    // Fetch user repositories
-    const { data: repos } = await octokit.repos.listForUser({
-      username,
-      sort: "updated",
-      per_page: 5,
-    })
+    while (fetchMore) {
+      const eventsResponse = isAuthenticated ? await octokit.activity.listEventsForAuthenticatedUser({ per_page, page, username })
+      : await octokit.activity.listPublicEventsForUser({ username, per_page, page })
 
-    // Fetch user events (activity)
-    const { data: events } = await octokit.activity.listPublicEventsForUser({
-      username,
-      per_page: 10,
-    })
-
-    // Calculate contributions (simplified - in a real app, you'd use the GraphQL API)
-    const contributionsLastYear: Contribution[] = generateMockContributions()
-
-    // Calculate languages (simplified)
-    const languages = calculateLanguages(repos)
-
-    // Calculate performance score
-    const performanceScore = calculatePerformanceScore(user, repos, events, contributionsLastYear)
-
-    return {
-      profile: {
-        login: user.login,
-        name: user.name,
-        avatarUrl: user.avatar_url,
-        bio: user.bio,
-        followers: user.followers,
-        following: user.following,
-        publicRepos: user.public_repos,
-        createdAt: user.created_at,
-      },
-      topRepositories: repos.map((repo) => ({
-        id: repo.id,
-        name: repo.name,
-        description: repo.description,
-        language: repo.language || null,
-        stargazersCount: repo.stargazers_count || 0,
-        forksCount: repo.forks_count || 0,
-        updatedAt: repo.updated_at || '',
-        url: repo.html_url,
-      })),
-      recentActivity: events.map((event) => ({
-        type: event.type,
-        repo: {
-          name: event.repo.name,
-          url: `https://github.com/${event.repo.name}`,
-        },
-        createdAt: event.created_at || '',
-        payload: event.payload,
-      })),
-      contributionsLastYear,
-      languages,
-      performanceScore,
+      const events = eventsResponse.data
+      allEvents.push(...events)
+      if (events.length < per_page) fetchMore = false
+      page++
     }
+    console.log(allEvents);
+    
+    const activityMap: { [key: string]: string } = {
+      PushEvent: "commit",
+      PullRequestEvent: "pull_request",
+      PullRequestReviewEvent: "review",
+      WatchEvent: "star_given",
+      CreateEvent: "repo_creation",
+      ForkEvent: "fork_made",
+      IssueCommentEvent: "issue"
+    }
+
+    const activities: UserActivity[] = allEvents
+      .filter((event: any) => {
+        const eventDate = new Date(event.created_at)
+        return (
+          eventDate >= new Date(SHAMSI_YEAR_1403_FROM)
+          && eventDate <= new Date(SHAMSI_YEAR_1403_TO)
+          // && event.type !== "WatchEvent" // Exclude stars given to the user
+          // && event.type !== "ForkEvent" // Exclude forks made by others
+        )
+      })
+      .map((event: any) => ({
+        date: event.created_at,
+        type: activityMap[event.type] || "other",
+        repo: event.repo.name,
+      }))
+
+    return activities
   } catch (error) {
-    console.error("Error fetching GitHub data:", error)
-    throw new Error("Failed to fetch GitHub data. Please check the username and try again.")
+    console.error("Error fetching GitHub activities:", error)
+    throw new Error("Failed to fetch GitHub activities.")
   }
 }
 
-// Helper functions
-function generateMockContributions(): Contribution[] {
-  const contributions: Contribution[] = []
-  const today = new Date()
-
-  for (let i = 364; i >= 0; i--) {
-    const date = new Date(today)
-    date.setDate(today.getDate() - i)
-
-    contributions.push({
-      date: date.toISOString().split("T")[0],
-      count: Math.floor(Math.random() * 10),
-    })
-  }
-
-  return contributions
-}
-
-function calculateLanguages(repos: any[]): { [key: string]: number } {
-  const languages: { [key: string]: number } = {}
-
-  repos.forEach((repo) => {
-    if (repo.language) {
-      if (languages[repo.language]) {
-        languages[repo.language]++
-      } else {
-        languages[repo.language] = 1
-      }
+// Grouping/ 1. by repo
+function groupActivitiesByRepo(activities: UserActivity[]) {
+  return activities.reduce((acc, activity) => {
+    if (!acc[activity.repo]) {
+      acc[activity.repo] = []
     }
-  })
-
-  return languages
+    acc[activity.repo].push(activity)
+    return acc
+  }, {} as { [repo: string]: UserActivity[] })
 }
 
-function calculatePerformanceScore(user: any, repos: any[], events: any[], contributions: Contribution[]): number {
-  // This is a simplified scoring algorithm
-  const repoScore = Math.min(repos.reduce((sum, repo) => sum + repo.stargazers_count + repo.forks_count, 0) / 10, 40)
-  const activityScore = Math.min(events.length * 2, 20)
-  const contributionScore = Math.min(contributions.reduce((sum, day) => sum + day.count, 0) / 100, 30)
-  const followerScore = Math.min(user.followers / 10, 10)
-
-  return Math.min(Math.round(repoScore + activityScore + contributionScore + followerScore), 100)
+// Grouping/ 2. by date
+function groupActivitiesByDate(activities: UserActivity[]) {
+  return activities.reduce((acc, activity) => {
+    const date = activity.date.split("T")[0] // Extract YYYY-MM-DD
+    if (!acc[date]) {
+      acc[date] = []
+    }
+    acc[date].push(activity)
+    return acc
+  }, {} as { [date: string]: UserActivity[] })
 }
-
