@@ -85,17 +85,17 @@ export function HorizontalYearCalendar({
   const getStreakColor = (category: string) => {
     switch (category) {
       case "Learning":
-        return "bg-green-500 dark:bg-green-600"
+        return "bg-green-500/20 border-green-500/70 dark:bg-green-600/20 dark:border-green-600/70"
       case "Exercise":
-        return "bg-blue-500 dark:bg-blue-600"
+        return "bg-blue-500/20 border-blue-500/70 dark:bg-blue-600/20 dark:border-blue-600/70"
       case "Meditation":
-        return "bg-purple-500 dark:bg-purple-600"
+        return "bg-purple-500/20 border-purple-500/70 dark:bg-purple-600/20 dark:border-purple-600/70"
       case "Reading":
-        return "bg-amber-500 dark:bg-amber-600"
+        return "bg-amber-500/20 border-amber-500/70 dark:bg-amber-600/20 dark:border-amber-600/70"
       case "Coding":
-        return "bg-rose-500 dark:bg-rose-600"
+        return "bg-rose-500/20 border-rose-500/70 dark:bg-rose-600/20 dark:border-rose-600/70"
       default:
-        return "bg-slate-500 dark:bg-slate-600"
+        return "bg-slate-500/20 border-slate-500/70 dark:bg-slate-600/20 dark:border-slate-600/70"
     }
   }
 
@@ -135,7 +135,7 @@ export function HorizontalYearCalendar({
         {/* Calendar grid */}
         <div className="grid grid-cols-7 gap-0">
           {calendarDays.map((day, index) => {
-            if (day === null) return <div key={`empty-${index}`} className="size-[10px]" />
+            if (day === null) return <div key={`empty-${index}`} className="size-fit" />
 
             const activities = getDayActivity(month, day)
             const intensity = getActivityIntensity(activities)
@@ -145,10 +145,10 @@ export function HorizontalYearCalendar({
               <TooltipProvider key={`day-${day}`}>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <div className="relative w-fit py-1 px-0.5">
+                    <div className="relative w-fit p-1.5">
                       <div
                         className={cn(
-                          "relative size-[10px] z-20 rounded-[2px] cursor-pointer transition-all",
+                          "relative size-2 z-20 rounded-[2px] cursor-pointer transition-all",
                           intensity === 0 &&
                             "bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700",
                           intensity === 1 &&
@@ -166,7 +166,7 @@ export function HorizontalYearCalendar({
                       {streakInfo && (
                         <div
                           className={cn(
-                            "absolute z-10 bottom-0 h-full left-0 right-0",
+                            "absolute z-10 bottom-0 h-full left-0 right-0 border-[0.1px]",
                             getStreakColor(streakInfo.category),
                             getStreakBorderRadius(streakInfo.isPrevDayInStreak, streakInfo.isNextDayInStreak),
                           )}
